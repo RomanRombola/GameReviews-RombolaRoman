@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Borrar Reseña — GameReviews{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-page__header">
+    <h1>¿Borrar esta reseña?</h1>
+    <p class="text-muted">Estás por borrar <strong>{{ post.titulo }}</strong>. Esta acción no se puede deshacer.</p>
+  </div>
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:flex; gap:1rem;">
+        <button type="submit" class="btn btn--danger">Sí, borrar</button>
+        <a href="{% url 'post_detalle' post.pk %}" class="btn btn--outline">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

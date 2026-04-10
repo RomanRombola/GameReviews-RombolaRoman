@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Enviar Mensaje — GameReviews{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-page__header">
+    <a href="{% url 'bandeja_entrada' %}" class="back-link">← Volver a mensajes</a>
+    <h1>Enviar Mensaje</h1>
+  </div>
+  <div class="card">
+    <form method="post" class="form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Enviar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

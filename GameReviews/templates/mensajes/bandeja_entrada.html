@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Mensajes — GameReviews{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Bandeja de entrada</h1>
+  <a href="{% url 'enviar_mensaje' %}" class="btn">+ Nuevo mensaje</a>
+</div>
+
+{% if mensajes %}
+  <div class="item-list">
+    {% for mensaje in mensajes %}
+    <div class="card" style="margin-bottom:1rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <strong>De: {{ mensaje.remitente.username }}</strong>
+        <span class="text-muted">{{ mensaje.fecha|date:"d/m/Y H:i" }}</span>
+      </div>
+      <p style="margin-bottom:0;">{{ mensaje.texto }}</p>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="empty-state">No tenés mensajes recibidos todavía.</p>
+{% endif %}
+{% endblock %}

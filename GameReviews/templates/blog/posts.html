@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Reseñas — GameReviews{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Todas las Reseñas</h1>
+  {% if user.is_authenticated %}
+    <a href="{% url 'post_crear' %}" class="btn">+ Nueva Reseña</a>
+  {% endif %}
+</div>
+
+{% if posts %}
+  <div class="grid grid-3">
+    {% for post in posts %}
+    <article class="card">
+      {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}" class="card__img" />
+      {% else %}
+        <div class="card__img card__img--placeholder">🎮</div>
+      {% endif %}
+      <div class="card__body">
+        {% if post.genero %}<span class="badge">{{ post.genero }}</span>{% endif %}
+        <h3 class="card__title">{{ post.titulo }}</h3>
+        <p class="card__sub">{{ post.subtitulo }}</p>
+        <p class="card__puntaje">Puntaje: <strong>{{ post.puntaje }}/10</strong></p>
+        <p class="text-muted">Por {{ post.autor.username }} — {{ post.fecha }}</p>
+        <a href="{% url 'post_detalle' post.pk %}" class="btn btn--sm">Leer más</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+  <div class="paginacion">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="btn btn--outline btn--sm">← Anterior</a>
+    {% endif %}
+    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="btn btn--outline btn--sm">Siguiente →</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+{% else %}
+  <p class="empty-state">No hay páginas aún.</p>
+{% endif %}
+{% endblock %}

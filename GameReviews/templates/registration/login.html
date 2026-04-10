@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Ingresar — GameReviews{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-page__header">
+    <h1>Ingresar</h1>
+  </div>
+  <div class="card">
+    <form method="post" class="form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Ingresar</button>
+    </form>
+    <p style="margin-top:1rem;">¿No tenés cuenta? <a href="{% url 'registro' %}">Registrarte</a></p>
+  </div>
+</div>
+{% endblock %}

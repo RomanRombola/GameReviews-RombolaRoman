@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio — GameReviews{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>GameReviews</h1>
+  <p>Las últimas reseñas publicadas por nuestra comunidad.</p>
+</div>
+
+{% if posts %}
+  <div class="grid grid-3">
+    {% for post in posts %}
+    <article class="card">
+      {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}" class="card__img" />
+      {% else %}
+        <div class="card__img card__img--placeholder">🎮</div>
+      {% endif %}
+      <div class="card__body">
+        <span class="badge">{{ post.genero }}</span>
+        <h3 class="card__title">{{ post.titulo }}</h3>
+        <p class="card__sub">{{ post.subtitulo }}</p>
+        <p class="card__puntaje">Puntaje: <strong>{{ post.puntaje }}/10</strong></p>
+        <p class="text-muted">Por {{ post.autor.username }} — {{ post.fecha }}</p>
+        <a href="{% url 'post_detalle' post.pk %}" class="btn btn--sm">Leer más</a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <div style="margin-top: 2rem;">
+    <a href="{% url 'posts' %}" class="btn btn--outline">Ver todas las reseñas</a>
+  </div>
+{% else %}
+  <p class="empty-state">No hay reseñas todavía.
+    {% if user.is_authenticated %}
+      <a href="{% url 'post_crear' %}">¡Publicá la primera!</a>
+    {% endif %}
+  </p>
+{% endif %}
+{% endblock %}
